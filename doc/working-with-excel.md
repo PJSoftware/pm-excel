@@ -150,6 +150,8 @@ my $nFormat     = $worksheet->Range("B5")->{NumberFormat};
     $excel->Quit();
 ```
 
+## Excel Cheat Sheet
+
 From [http://www.tek-tips.com/faqs.cfm?fid=6715](http://www.tek-tips.com/faqs.cfm?fid=6715)
 
 ```perl
@@ -157,19 +159,19 @@ use OLE;
 use Win32::OLE::Const "Microsoft Excel";
 ```
 
-## DEFINE EXCEL
+### DEFINE EXCEL
 
 ```perl
 $excel = CreateObject OLE "Excel.Application";
 ```
 
-## MAKE EXCEL VISIBLE
+### MAKE EXCEL VISIBLE
 
 ```perl
 $excel->{Visible} = 1;
 ```
 
-## ADD NEW WORKBOOK
+### ADD NEW WORKBOOK
 
 ```perl
 $workbook = $excel->Workbooks->Add;
@@ -177,7 +179,7 @@ $sheet = $workbook->Worksheets("Sheet1");
 $sheet->Activate;
 ```
 
-## OPEN EXISTING WORKBOOK
+### OPEN EXISTING WORKBOOK
 
 ```perl
 $workbook = $excel->Workbooks->Open("$file_name");
@@ -186,7 +188,7 @@ $sheet = $workbook->Worksheets($sheet);
 $sheet->Activate;
 ```
 
-## ACTIVATE EXISTING WORKBOOK
+### ACTIVATE EXISTING WORKBOOK
 
 ```perl
 $excel->Windows("Book1")->Activate;
@@ -194,44 +196,44 @@ $workbook = $excel->Activewindow;
 $sheet = $workbook->Activesheet;
 ```
 
-## CLOSE WORKBOOK
+### CLOSE WORKBOOK
 
 ```perl
 $workbook->Close;
 ```
 
-## ADD NEW WORKSHEET
+### ADD NEW WORKSHEET
 
 ```perl
 $workbook->Worksheets->Add({After => $workbook->Worksheets($workbook->Worksheets->{Count})});
 ```
 
-## CHANGE WORKSHEET NAME
+### CHANGE WORKSHEET NAME
 
 ```perl
 $sheet->{Name} = "Name of Worksheet";
 ```
 
-## PRINT VALUE TO CELL
+### PRINT VALUE TO CELL
 
 ```perl
 $sheet->Range("A1")->{Value} = 1234;
 ```
 
-## SUM FORMULAS
+### SUM FORMULAS
 
 ```perl
 $sheet->Range("A3")->{FormulaR1C1} = "=SUM(R[-2]C:R[-1]C)"; # Sum rows
 $sheet->Range("C1")->{FormulaR1C1} = "=SUM(RC[-2]:RC[-1])"; # Sum columns
 ```
 
-## RETRIEVE VALUE FROM CELL
+### RETRIEVE VALUE FROM CELL
 
 ```perl
 $data = $sheet->Range("G7")->{Value};
 ```
 
-## FORMAT TEXT
+### FORMAT TEXT
 
 ```perl
 $sheet->Range("G7:H7")->Font->{Bold}        = "True";
@@ -251,14 +253,14 @@ $sheet->Range("G7:H7")->{NumberFormat} = "0.00%";                           # Pe
 $sheet->Range("G7:H7")->{NumberFormat} = "m/d/yyyy";                        # Dates
 ```
 
-## ALIGN TEXT
+### ALIGN TEXT
 
 ```perl
 $sheet->Range("G7:H7")->{HorizontalAlignment} = xlHAlignCenter; # Center text;
 $sheet->Range("A1:A2")->{Orientation} = 90;                     # Rotate text
 ```
 
-## SET COLUMN WIDTH/ROW HEIGHT
+### SET COLUMN WIDTH/ROW HEIGHT
 
 ```perl
 $sheet->Range('A:A')->{ColumnWidth} = 9.14;
@@ -266,14 +268,14 @@ $sheet->Range("8:8")->{RowHeight} = 30;
 $sheet->Range("G:H")->{Columns}->Autofit;
 ```
 
-## FIND LAST ROW/COLUMN WITH DATA
+### FIND LAST ROW/COLUMN WITH DATA
 
 ```perl
 $last_row = $sheet->UsedRange->Find({What => "*", SearchDirection => xlPrevious, SearchOrder => xlByRows})->{Row};
 $last_col = $sheet->UsedRange->Find({What => "\*", SearchDirection => xlPrevious, SearchOrder => xlByColumns})->{Column};
 ```
 
-## ADD BORDERS
+### ADD BORDERS
 
 ```perl
 $sheet->Range("A3:I3")->Borders(xlEdgeBottom)->{LineStyle}  = xlDouble;
@@ -293,7 +295,7 @@ $sheet->Range("A3:I3")->Borders(xlInsideHorizontal)->{LineStyle} = xlContinuous;
 $sheet->Range("A3:I3")->Borders(xlInsideHorizontal)->{Weight} = xlThin;
 ```
 
-## PRINT SETUP
+### PRINT SETUP
 
 ```perl
 $sheet->PageSetup->{Orientation}  = xlLandscape;
@@ -309,56 +311,56 @@ $sheet->PageSetup->FitToPagesWide = 1;
 $sheet->PageSetup->FitToPagesTall = 1;
 ```
 
-## ADD PAGE BREAK
+### ADD PAGE BREAK
 
 ```perl
 $excel->ActiveWindow->SelectedSheets->HPageBreaks->Add({Before => $sheet->Range("3:3")});
 ```
 
-## HIDE COLUMNS
+### HIDE COLUMNS
 
 ```perl
 $sheet->Range("G:H")->EntireColumn->{Hidden} = "True";
 ```
 
-## MERGE CELLS
+### MERGE CELLS
 
 ```perl
 $sheet->Range("H10:J10")->Merge;
 ```
 
-## INSERT PICTURE
+### INSERT PICTURE
 
 ```perl
 $sheet->Pictures->Insert("picture_name");               # Insert in upper-left corner
 $excel->ActiveSheet->Pictures->Insert("picture_name");  # Insert in active cell
 ```
 
-## GROUP ROWS
+### GROUP ROWS
 
 ```perl
 $sheet->Range("7:8")->Group;
 ```
 
-## ACTIVATE CELL
+### ACTIVATE CELL
 
 ```perl
 $sheet->Range("A2")->Activate;
 ```
 
-## FREEZE PANES
+### FREEZE PANES
 
 ```perl
 $excel->ActiveWindow->{FreezePanes} = "True";
 ```
 
-## DELETE SHEET
+### DELETE SHEET
 
 ```perl
 $sheet->Delete;
 ```
 
-## SAVE AND QUIT
+### SAVE AND QUIT
 
 ```perl
 $excel->{DisplayAlerts} = 0; # This turns off the "This file already exists" message.
